@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HI-Toyz | Register</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1><a href="index.html"><img src="images/hitoyz-removebg-preview.png" alt="logo"></a></h1>
+          <nav>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="products.html">Products</a></li>
+              <li><a href="gallery.html">Gallery</a></li>
+              <li><a href="events.html">Events</a></li>
+              <li><a href="register.html">Register</a></li>
+            </ul>
+          </nav>
+        </header>      
+
+  <main>
+    <section id="register">
+      <div class="container">
+        <h2>Register</h2>
+        <form id="registration-form">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" name="dob" required>
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="agree" name="agree" required>
+              I agree to the regulations
+            </label>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn">Register</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2019 HI-Toyz. All rights reserved.</p>
+  </footer>
+
+  <script>
+    
+const registrationForm = document.getElementById('registration-form');
+registrationForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const nameField = document.getElementById('name');
+  const passwordField = document.getElementById('password');
+  const emailField = document.getElementById('email');
+  const dobField = document.getElementById('dob');
+  const agreeField = document.getElementById('agree');
+
+  if (nameField.value.trim() === '') {
+    alert('Please enter your name.');
+    nameField.focus();
+    return;
+  }
+
+  if (passwordField.value.trim() === '') {
+    alert('Please enter a password.');
+    passwordField.focus();
+    return;
+  } else if (!isPasswordValid(passwordField.value.trim())) {
+    alert('Password must be at least 8 characters long and contain a mix of uppercase letters, lowercase letters, and numbers.');
+    passwordField.focus();
+    return;
+  }
+
+  if (emailField.value.trim() === '') {
+    alert('Please enter your email.');
+    emailField.focus();
+    return;
+  } else if (!isEmailValid(emailField.value.trim())) {
+    alert('Please enter a valid email address.');
+    emailField.focus();
+    return;
+  }
+
+  if (dobField.value.trim() === '') {
+    alert('Please enter your date of birth.');
+    dobField.focus();
+    return;
+  } else if (!isDOBValid(dobField.value.trim())) {
+    alert('Minimum date of birth is 2015.');
+    dobField.focus();
+    return;
+  }
+
+  if (!agreeField.checked) {
+    alert('Please agree to the regulations.');
+    return;
+  }
+
+  registrationForm.submit();
+});
+
+function isPasswordValid(password) {
+  if (password.length < 8) {
+    return false;
+  }
+
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+
+  return hasUpperCase && hasLowerCase && hasNumber;
+}
+
+function isEmailValid(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function isDOBValid(dob) {
+  const parts = dob.split('/'); 
+  const day = parseInt(parts[0], 10); 
+  const month = parseInt(parts[1], 10); 
+  const year = parseInt(parts[2], 10); 
+
+  const inputDOB = new Date(year, month - 1, day);
+  const minDOB = new Date(2015, 11, 31); 
+  return inputDOB >= minDOB;
+}
+  </script>
+</body>
+</html>
